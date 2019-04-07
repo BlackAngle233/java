@@ -30,13 +30,13 @@ public class WordLadder{
         //     }
         // }
         String str = "classpath:file/EnglishWords.txt";
-        System.out.println("Please enter filename containing source text:");
         while(true){
             File file = ResourceUtils.getFile(str);
             if(file.exists()) break;
         }
         try {
-			FileReader fr = new FileReader(str);
+            File file = ResourceUtils.getFile(str);
+			FileReader fr = new FileReader(file);
 			BufferedReader bf = new BufferedReader(fr);
 			String str1;
 			while ((str1 = bf.readLine()) != null) {
@@ -50,11 +50,9 @@ public class WordLadder{
     }
 
     public void inputWords(String s, String d){
-        System.out.println("Enter start word (enter ':q' to quit):");
         if (s.equals(":q"))
             System.exit(0);
         start = s;
-        System.out.println("Enter destination word:");
         destination = d;
         start = start.replaceAll("[^a-z^A-Z]", "");
         start = start.toLowerCase();
@@ -62,7 +60,7 @@ public class WordLadder{
         destination = destination.toLowerCase();
     }
 
-    public void showAns(){
+    public String showAns(){
         Set<String> used = new HashSet<String>();
         String tmp;
         String wtmp,tmp1;
@@ -83,9 +81,9 @@ public class WordLadder{
         // clock_t startTime,endTime;
         // startTime = clock();
         //initialize the input and judge if the input is legal
-        if(!words.contains(start))   {System.out.println("no ladder exists\n");return ;}
-        if(!words.contains(destination))   {System.out.println("no ladder exists\n");return ;}
-        if(start.length() != destination.length())    System.out.println("no ladder exists\n");
+        if(!words.contains(start))   {return "no ladder exists\n";}
+        if(!words.contains(destination))   {return "no ladder exists\n";}
+        if(start.length() != destination.length())    {return "no ladder exists\n";}
         else
         {
         //create the first ladder
@@ -107,18 +105,13 @@ public class WordLadder{
                 //judge if it is a right ladder
                 if(wtmp.equals(destination) && !find)
                 {
-                    System.out.print("Found ladder:");
-                    System.out.print(tmp);
                     ans += tmp;
                     while(hs.containsKey(tmp))
                     {
-                        System.out.print(" <- ");
                         ans += " <- ";
                         tmp = hs.get(tmp);
-                        System.out.print(tmp);
                         ans += tmp;
                     }
-                    System.out.print("\n");
                     find = true;
                     break;
                 }
@@ -155,8 +148,14 @@ public class WordLadder{
                     }
                 }
             }
-            if(!find)   System.out.println("no ladder exists\n\n");//judge if there is a right ladder
+            if(!find){//judge if there is a right ladder
+                return "no ladder exists\n\n";
+            }
+            else{
+                return ans;
+            }
         }
+        
         // end the research and output the time used
         // endTime = clock();
         // cout << "Totle Time : " <<(double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
