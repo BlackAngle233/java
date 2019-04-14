@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,8 +33,9 @@ public class WordLadderController {
     }
 
     @RequestMapping("/input")
-    public String input() {
-        return "input";
+    public ModelAndView input() {
+        ModelAndView mv = new ModelAndView("input");
+        return mv;
     }
 
     @RequestMapping("/wordladder")

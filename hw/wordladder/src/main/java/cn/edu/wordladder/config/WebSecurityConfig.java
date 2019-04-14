@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(ENCODER).withUser("user").password(ENCODER.encode("{noop}123456"))
+        auth.inMemoryAuthentication().passwordEncoder(ENCODER).withUser("user").password(ENCODER.encode("123456"))
                 .roles("USER");
     }
 
