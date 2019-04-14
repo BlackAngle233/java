@@ -4,17 +4,38 @@ import java.io.FileNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.edu.wordladder.domain.WordLadder;
 
 @RestController
 public class WordLadderController {
 
+    @RequestMapping("/")
+    public ModelAndView root() {
+        ModelAndView mv = new ModelAndView("redirect:/index");
+        return mv;
+    }
+    
+
     @RequestMapping("/index")
-    public String home() {
-        return "index";
+    public ModelAndView index() {
+        ModelAndView mv = new ModelAndView("index");
+        return mv;
+    }
+
+    @RequestMapping("/login")
+    public ModelAndView login() {
+        ModelAndView mv = new ModelAndView("login");
+        return mv;
+    }
+
+    @RequestMapping("/input")
+    public String input() {
+        return "input";
     }
 
     @RequestMapping("/wordladder")
