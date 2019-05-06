@@ -2,8 +2,6 @@ package cn.sjtu.edu.wordladder.domain;
 
 import java.util.*;
 
-import org.springframework.util.ResourceUtils;
-
 import java.io.*;
 
 public class WordLadder{
@@ -15,7 +13,7 @@ public class WordLadder{
     public WordLadder(){
     }
 
-    public void readEnglish() throws FileNotFoundException {
+    public void readEnglish() throws FileNotFoundException, UnsupportedEncodingException {
         // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
         // System.out.println("Please enter filename containing source text:");
@@ -29,21 +27,17 @@ public class WordLadder{
         //         e.printStackTrace();
         //     }
         // }
-        String str = "classpath:file/EnglishWords.txt";
-        while(true){
-            File file = ResourceUtils.getFile(str);
-            if(file.exists()) break;
-        }
+        String str = "EnglishWords.txt";
         try {
-            File file = ResourceUtils.getFile(str);
-			FileReader fr = new FileReader(file);
-			BufferedReader bf = new BufferedReader(fr);
+            InputStream is=this.getClass().getResourceAsStream(str);
+            InputStreamReader read1 = new InputStreamReader(is, "utf-8");
+            BufferedReader bf = new BufferedReader((read1));
 			String str1;
 			while ((str1 = bf.readLine()) != null) {
 				words.add(str1);
 			}
 			bf.close();
-			fr.close();
+			read1.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
